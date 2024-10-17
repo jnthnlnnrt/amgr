@@ -57,8 +57,11 @@ final class Computers extends PowerGridComponent
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-            ->add('id')
-            ->add('asset_tag')
+            ->add('asset_tag', function($computer){
+                return sprintf(
+                    '<a href="/assets/computers/edit/%s" wire:navigate class="text-blue-600">' . $computer->asset_tag . '</a>', urlencode(e($computer->id)), e($computer->id)
+                );
+            })
             ->add('manufacturer', fn ($computer) => e($computer->manufacturer->name))
             ->add('model')
             ->add('serial')
